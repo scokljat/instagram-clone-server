@@ -1,0 +1,26 @@
+{
+  "name": "instagram-clone-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scokljat/instagram-clone-server.git"
+  },
+  "author": "Selma Cokljat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scokljat/instagram-clone-server/issues"
+  },
+  "homepage": "https://github.com/scokljat/instagram-clone-server#readme",
+  "dependencies": {
+    "@prisma/client": "^3.9.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "prisma": "^3.9.2"
+  }
+}
