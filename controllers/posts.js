@@ -16,4 +16,15 @@ const createPost = async (req, res) => {
   res.json(post);
 };
 
-module.exports = { getPosts, createPost };
+const deletePost = async (req, res) => {
+  const id = req.params.id;
+
+  const deletedPost = await prisma.post.delete({
+    where: {
+      id: Number(id),
+    },
+  });
+  res.json(deletedPost);
+};
+
+module.exports = { getPosts, createPost, deletePost };
