@@ -1,15 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 require("dotenv").config();
 
 const postRoutes = require("./routes/posts");
 const userRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json({ extended: true }));
-app.use("/", postRoutes);
-app.use("/users", userRoutes);
+app.use(cors());
+app.use(postRoutes);
+app.use(userRoutes);
+app.use(authRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`htttp://localhost:${PORT}`));
