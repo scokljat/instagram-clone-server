@@ -18,5 +18,5 @@ app.use(postRoutes);
 app.use(userRoutes);
 app.use(authRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3500;
 app.listen(PORT, () => console.log(`htttp://localhost:${PORT}`));
