@@ -6,6 +6,7 @@ require("dotenv").config();
 const postRoutes = require("./routes/posts");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
+const likeRoutes = require("./routes/likes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(postRoutes);
 app.use(userRoutes);
 app.use(authRoutes);
+app.use(likeRoutes);
 
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 2000;
 app.listen(PORT, () => console.log(`htttp://localhost:${PORT}`));

@@ -27,7 +27,8 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
     },
   });
-  res.json(newUser);
+  const token = jwt.sign({ id: newUser.id }, process.env.TOKEN_SECRET);
+  res.header("auth-token", token).send(token);
 };
 
 const loginUser = async (req, res) => {
