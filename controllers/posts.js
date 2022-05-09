@@ -27,4 +27,12 @@ const deletePost = async (req, res) => {
   res.json(deletedPost);
 };
 
-module.exports = { getPosts, createPost, deletePost };
+const getPostsbyUserId = async (req, res) => {
+  id = req.params.id;
+  const posts = await prisma.post.findMany({
+    where: { userId: Number(id) },
+  });
+  res.json(posts);
+};
+
+module.exports = { getPosts, createPost, deletePost, getPostsbyUserId };
