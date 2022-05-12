@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const res = require("express/lib/response");
 
 const prisma = new PrismaClient();
 
@@ -8,12 +9,30 @@ const getPosts = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
+  const values = req.body;
   const post = await prisma.post.create({
     data: {
-      ...req.body,
+      description: values.description,
+      url: values.url,
+      user: {
+        connect: { id: values.userId },
+      },
     },
   });
-  res.json(post);
+
+  const createdPost = await prisma.post.findUnique({
+    where: { id: post.id },
+    include: {
+      user: true,
+      likes: {
+        include: {
+          user: true,
+          post: true,
+        },
+      },
+    },
+  });
+  res.json(createdPost);
 };
 
 const deletePost = async (req, res) => {
@@ -27,12 +46,4 @@ const deletePost = async (req, res) => {
   res.json(deletedPost);
 };
 
-const getPostsbyUserId = async (req, res) => {
-  id = req.params.id;
-  const posts = await prisma.post.findMany({
-    where: { userId: Number(id) },
-  });
-  res.json(posts);
-};
-
-module.exports = { getPosts, createPost, deletePost, getPostsbyUserId };
+module.exports = { getPosts, createPost, deletePost };
