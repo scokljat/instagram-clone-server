@@ -38,6 +38,13 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const userId = req.params.id;
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  const existingUsername = await prisma.user.findUnique({
+    where: { userName: req.body.userName },
+  });
+  if (existingUsername !== null && existingUsername.id !== userId) {
+    return res.status(400).send({ exception: "Username is already in use!" });
+  }
+
   const args = {
     select: {
       email: true,
@@ -54,7 +61,7 @@ const updateUser = async (req, res) => {
   };
 
   const user = await prisma.user.update(args);
-  return res.json(user);
+  return res.status(200).send(user);
 };
 
 module.exports = { getUsers, getUserById, createUser, deleteUser, updateUser };
