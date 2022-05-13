@@ -4,7 +4,9 @@ const res = require("express/lib/response");
 const prisma = new PrismaClient();
 
 const getPosts = async (req, res) => {
-  const posts = await prisma.post.findMany({ include: { user: true } });
+  const posts = await prisma.post.findMany({
+    include: { user: true, likes: true },
+  });
   res.json({ posts });
 };
 
