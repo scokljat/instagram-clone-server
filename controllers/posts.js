@@ -7,7 +7,7 @@ const getPosts = async (req, res) => {
   const posts = await prisma.post.findMany({
     include: { user: true, likes: true },
   });
-  res.json({ posts });
+  res.json(posts);
 };
 
 const createPost = async (req, res) => {
@@ -48,4 +48,27 @@ const deletePost = async (req, res) => {
   res.json(deletedPost);
 };
 
-module.exports = { getPosts, createPost, deletePost };
+const updatePost = async (req, res) => {
+  const id = req.params.id;
+  const args = {
+    select: {
+      id: true,
+      createdAt: true,
+      updatedAt: true,
+      description: true,
+      url: true,
+      userId: true,
+      user: true,
+    },
+    where: {
+      id: Number(id),
+    },
+    data: { ...req.body },
+  };
+
+  const updatedPost = await prisma.post.update(args);
+
+  res.status(200).send(updatedPost);
+};
+
+module.exports = { getPosts, createPost, deletePost, updatePost };
