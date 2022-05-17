@@ -13,7 +13,7 @@ router.get("/posts", getPosts);
 
 router.post("/posts", createPost);
 
-router.delete("/posts/:id", deletePost);
+router.post("/posts/delete-post", deletePost);
 
 router.patch("/posts/:id", updatePost);
 

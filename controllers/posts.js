@@ -38,14 +38,14 @@ const createPost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-  const id = req.params.id;
+  const deletedLikes = await prisma.likes.deleteMany({
+    where: { postId: req.body.postId },
+  });
 
   const deletedPost = await prisma.post.delete({
-    where: {
-      id: Number(id),
-    },
+    where: { id: req.body.postId },
   });
-  res.json(deletedPost);
+  res.status(200).send(deletedPost);
 };
 
 const updatePost = async (req, res) => {
