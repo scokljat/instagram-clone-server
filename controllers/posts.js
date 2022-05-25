@@ -7,7 +7,7 @@ const getPosts = async (req, res) => {
   const posts = await prisma.post.findMany({
     include: { user: true, likes: true },
   });
-  res.json(posts);
+  res.status(200).send(posts);
 };
 
 const createPost = async (req, res) => {
@@ -34,7 +34,7 @@ const createPost = async (req, res) => {
       },
     },
   });
-  res.json(createdPost);
+  res.status(200).send(createdPost);
 };
 
 const deletePost = async (req, res) => {
@@ -59,6 +59,7 @@ const updatePost = async (req, res) => {
       url: true,
       userId: true,
       user: true,
+      likes: true,
     },
     where: {
       id: Number(id),
