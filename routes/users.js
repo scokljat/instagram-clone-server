@@ -15,7 +15,7 @@ router.get("/users/:id", getUserById);
 
 router.post("/users", createUser);
 
-router.delete("/users/:id", deleteUser);
+router.post("/users/delete-user", deleteUser);
 
 router.patch("/users/:id", updateUser);
 

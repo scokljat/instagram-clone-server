@@ -6,13 +6,13 @@ const prisma = new PrismaClient();
 
 const getUsers = async (req, res) => {
   const users = await prisma.user.findMany();
-  res.json({ users });
+  res.status(200).send({ users });
 };
 
 const getUserById = async (req, res) => {
   id = req.params.id;
   const user = await prisma.user.findUnique({ where: { id: Number(id) } });
-  res.json(user);
+  res.status(200).send(user);
 };
 
 const createUser = async (req, res) => {
@@ -21,18 +21,24 @@ const createUser = async (req, res) => {
       ...req.body,
     },
   });
-  res.json(newuser);
+  res.status(200).send(newuser);
 };
 
 const deleteUser = async (req, res) => {
-  const id = req.params.id;
-
-  const deletedUser = await prisma.user.delete({
-    where: {
-      id: Number(id),
-    },
-  });
-  res.json(deletedUser);
+  //   console.log(req.body);
+  //   const deletedLikes = await prisma.likes.deleteMany({
+  //     where: { userId: req.body.userId },
+  //   });
+  //   const deletedPosts = await prisma.post.deleteMany({
+  //     where: { userId: req.body.userId },
+  //     include: {
+  //       likes: true,
+  //     },
+  //   });
+  //   // const deletedUser = await prisma.user.delete({
+  //   //   where: { id: req.body.userId },
+  //   // });
+  //   res.status(200).send(deletedPosts);
 };
 
 const updateUser = async (req, res) => {
