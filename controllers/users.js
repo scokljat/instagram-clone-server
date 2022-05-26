@@ -25,20 +25,37 @@ const createUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  //   console.log(req.body);
-  //   const deletedLikes = await prisma.likes.deleteMany({
-  //     where: { userId: req.body.userId },
-  //   });
-  //   const deletedPosts = await prisma.post.deleteMany({
-  //     where: { userId: req.body.userId },
-  //     include: {
-  //       likes: true,
-  //     },
-  //   });
-  //   // const deletedUser = await prisma.user.delete({
-  //   //   where: { id: req.body.userId },
-  //   // });
-  //   res.status(200).send(deletedPosts);
+  const deletedUserLikes = await prisma.likes.deleteMany({
+    where: { userId: req.body.userId },
+  });
+
+  const userPosts = await prisma.post.findMany({
+    where: { userId: req.body.userId },
+  });
+
+  const array = [];
+
+  for (var i = 0; i < userPosts.length; i++) {
+    array.push(userPosts[i].id);
+  }
+
+  const deletedPostLikes = await prisma.likes.deleteMany({
+    where: {
+      postId: {
+        in: array,
+      },
+    },
+  });
+
+  const deletedPosts = await prisma.post.deleteMany({
+    where: { userId: req.body.userId },
+  });
+
+  const deletedUser = await prisma.user.delete({
+    where: { id: req.body.userId },
+  });
+
+  res.status(200).send(deletedUser);
 };
 
 const updateUser = async (req, res) => {
